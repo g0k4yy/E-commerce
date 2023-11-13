@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop  # use 'update' or 'create-drop' for tests
+    show-sql: true
+    # Add this line to defer the initialization
+    defer-datasource-initialization: true
+
+  # Configuration to enable H2 console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # Enable SQL script initialization
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:users.sql

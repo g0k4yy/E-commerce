@@ -1,14 +1,9 @@
 package com.ecommerce.ecommerce.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
+@Data
 public class AuthResponseDto {
 
     private String message;

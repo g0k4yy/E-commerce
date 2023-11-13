@@ -1,22 +1,27 @@
 package com.ecommerce.ecommerce.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import java.util.List;
+
 
 @Getter
-@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "users")
 public class Users {
+
+    //TODO User - Review/Rating Relationship:
+    //TODO One-to-Many: A User can write multiple Reviews/Ratings, but each Review/Rating is associated with one User.
+
+    //TODO User - Order Relationship:
+    //TODO One-to-Many: A User can have multiple Orders, but each Order is associated with one User.
+
+    //TODO User - Cart Relationship:
+    //TODO One-to-One: Usually, a User has one Cart. This relationship can also be modeled as One-to-Many if you allow for multiple carts per user (e.g., saved carts).
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +43,15 @@ public class Users {
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    private List<Address> addresses;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 
 }
