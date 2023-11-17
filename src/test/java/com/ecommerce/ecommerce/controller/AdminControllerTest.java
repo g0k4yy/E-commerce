@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,7 +38,7 @@ public class AdminControllerTest {
     @Test
     public void testGetUserByUsername() throws Exception {
         mockMvc.perform(get("/admin/users")
-                        .param("username","bbosmak")
+                        .param("searchTerm","bbosmak")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].email").value("bbosmak@imageshack.us"));
