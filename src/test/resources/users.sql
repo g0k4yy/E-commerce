@@ -997,3 +997,11 @@ insert into users (username, password, email, first_name, last_name) values ('sc
 insert into users (username, password, email, first_name, last_name) values ('jroskamrp', 'mP0/Nf/N$Epw+3EX', 'jroskamrp@paginegialle.it', 'Jase', 'Roskam');
 insert into users (username, password, email, first_name, last_name) values ('vduchasteaurq', 'pI5/N=rt%', 'vduchasteaurq@earthlink.net', 'Vincents', 'Duchasteau');
 insert into users (username, password, email, first_name, last_name) values ('jlattkarr', 'lT9<U!9m<!fM2', 'jlattkarr@arstechnica.com', 'Jeannine', 'Lattka');
+--------------------------------------------------------
+INSERT INTO categories (name) VALUES ('Electronics');
+INSERT INTO products (name, description, price, stock_quantity, category_id) VALUES ('Sample Product', 'A sample product description', 19.99, 100, 1);
+INSERT INTO addresses (street, district, city, country, postal_code, user_id) VALUES ('123 Main St', 'Downtown', 'Springfield', 'USA', '12345', (SELECT id FROM users WHERE username = 'hcoopman1'));
+INSERT INTO orders (user_id) VALUES ((SELECT id FROM users WHERE username = 'hcoopman1'));
+INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (1, 1, 2, 19.99);
+INSERT INTO reviews (title, content, rating, user_id, product_id) VALUES ('Great Product', 'I really liked this product', 5, (SELECT id FROM users WHERE username = 'hcoopman1'), 1);
+

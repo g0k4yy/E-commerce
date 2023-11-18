@@ -3,12 +3,13 @@ package com.ecommerce.ecommerce.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Setter
+@Getter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "order_details")
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

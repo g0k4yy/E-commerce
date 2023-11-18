@@ -2,6 +2,10 @@ package com.ecommerce.ecommerce.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -13,16 +17,6 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class Users {
-
-    //TODO User - Review/Rating Relationship:
-    //TODO One-to-Many: A User can write multiple Reviews/Ratings, but each Review/Rating is associated with one User.
-
-    //TODO User - Order Relationship:
-    //TODO One-to-Many: A User can have multiple Orders, but each Order is associated with one User.
-
-    //TODO User - Cart Relationship:
-    //TODO One-to-One: Usually, a User has one Cart. This relationship can also be modeled as One-to-Many if you allow for multiple carts per user (e.g., saved carts).
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,6 +35,9 @@ public class Users {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;

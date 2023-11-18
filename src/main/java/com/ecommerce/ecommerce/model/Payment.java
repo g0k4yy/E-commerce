@@ -2,7 +2,8 @@ package com.ecommerce.ecommerce.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Setter
+
+@Getter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor

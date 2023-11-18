@@ -2,7 +2,7 @@ package com.ecommerce.ecommerce.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Setter
+@Getter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,3 +24,4 @@ public class Review {
     @ManyToOne
     private Product product;
 }
+

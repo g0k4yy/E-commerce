@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerce.controller;
 
-import com.ecommerce.ecommerce.dto.APIResponseDTO;
+import com.ecommerce.ecommerce.dto.AddressDTO;
+import com.ecommerce.ecommerce.dto.DeleteResponseDTO;
 import com.ecommerce.ecommerce.dto.DetailedUserDTO;
 import com.ecommerce.ecommerce.dto.UserDTO;
 import com.ecommerce.ecommerce.service.AdminService;
@@ -30,24 +31,26 @@ public class AdminController {
         return ResponseEntity.ok(users.getContent());
     }
    @DeleteMapping("/users")
-    public ResponseEntity<APIResponseDTO> deleteUser(@RequestParam() Long userID) {
-       APIResponseDTO apiResponseDTO = adminService.deleteUser(userID);
+    public ResponseEntity<DeleteResponseDTO> deleteUser(@RequestParam() Long userID) {
+       DeleteResponseDTO deleteResponseDTO = adminService.deleteUser(userID);
 
-       if (apiResponseDTO.isSuccess()) {
-           return ResponseEntity.ok(apiResponseDTO);
+       if (deleteResponseDTO.isSuccess()) {
+           return ResponseEntity.ok(deleteResponseDTO);
        } else {
-           HttpStatus status = apiResponseDTO.getMessage().equals("User not found")
+           HttpStatus status = deleteResponseDTO.getMessage().equals("User not found")
                    ? HttpStatus.NOT_FOUND
                    : HttpStatus.INTERNAL_SERVER_ERROR;
 
-           return ResponseEntity.status(status).body(apiResponseDTO);
+           return ResponseEntity.status(status).body(deleteResponseDTO);
        }
     }
 
     @GetMapping("users/{userId}")
     public ResponseEntity<DetailedUserDTO> getUserDetailed(@PathVariable Long userId){
+        //AddressDTO dto = new AddressDTO();
 
 
+    return null;
     }
 
 

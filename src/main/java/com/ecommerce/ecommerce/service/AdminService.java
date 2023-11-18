@@ -1,12 +1,16 @@
 package com.ecommerce.ecommerce.service;
 
 
-import com.ecommerce.ecommerce.dto.APIResponseDTO;
+import com.ecommerce.ecommerce.dto.DeleteResponseDTO;
+import com.ecommerce.ecommerce.dto.DetailedUserDTO;
 import com.ecommerce.ecommerce.dto.UserDTO;
+import com.ecommerce.ecommerce.exception.UserNotFoundException;
+import com.ecommerce.ecommerce.mapper.UserMapper;
 import com.ecommerce.ecommerce.model.Users;
 import com.ecommerce.ecommerce.repository.UsersRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -18,7 +22,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AdminService {
 
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
+    private final UserMapper userMapper;
 
     public Page<UserDTO> searchUsers(String searchTerm, int page, int size) {
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
@@ -28,29 +33,21 @@ public class AdminService {
         }
     }
 
-    public APIResponseDTO deleteUser(Long userID) {
-        try {
-            Optional<Users> user = usersRepository.findById(userID);
-            if (user.isEmpty()) {
-                log.info("Attempted to delete a user that does not exist with ID: {}", userID);
-                return APIResponseDTO.builder()
-                        .message("User not found")
-                        .success(false)
-                        .build();
-            }
-            usersRepository.deleteById(userID);
-            log.info("Deleted user with ID: {}", userID);
-            return APIResponseDTO.builder()
-                    .message("Successfully deleted")
-                    .success(true)
-                    .build();
+    public DeleteResponseDTO deleteUser(Long userID) {
+        Users user = usersRepository.findById(userID)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userID));
 
-        } catch (Exception e) {
-            log.error("Error deleting user: ", e);
-            return APIResponseDTO.builder()
-                    .message("Error occurred during deletion")
-                    .success(false)
-                    .build();
-        }
+        usersRepository.deleteById(userID);
+        log.info("Deleted user with ID: {}", userID);
+        return DeleteResponseDTO.builder()
+                .message("Successfully deleted")
+                .success(true)
+                .build();
+    }
+
+    public DetailedUserDTO getUserDetailed(Long userID) {
+        Users user = usersRepository.findById(userID)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userID));
+        return userMapper.userToDetailedUserDTO(user);
     }
 }

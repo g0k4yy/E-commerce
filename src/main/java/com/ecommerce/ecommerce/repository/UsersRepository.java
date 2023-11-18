@@ -25,4 +25,5 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 
     @Query("SELECT new com.ecommerce.ecommerce.dto.UserDTO(u.id, u.username, u.email, u.firstName, u.lastName) FROM Users u")
     Page<UserDTO> findAllUsers(Pageable pageable);
+
 }
